@@ -203,7 +203,8 @@ extern "C" void free_x11(int thr_id)
 	cudaThreadSynchronize();
 
 	cudaFree(d_hash[thr_id]);
-
+	
+	x11_simd512_cpu_free(thr_id);
 	quark_blake512_cpu_free(thr_id);
 
 	cuda_check_cpu_free(thr_id);
