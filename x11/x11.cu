@@ -19,9 +19,6 @@ extern "C" {
 
 static uint32_t *d_hash[MAX_GPUS];
 
-extern void lyra2_cpu_init(int thr_id, uint32_t threads, uint64_t *d_matrix);
-extern void lyra2_cpu_hash_32(int thr_id, uint32_t threads, uint64_t *d_outputHash, bool gtx750ti);
-
 extern void x15_whirlpool_cpu_init(int thr_id, uint32_t threads, int mode);
 extern void x15_whirlpool_cpu_hash_64(int thr_id, uint32_t threads, uint32_t startNounce, uint32_t *d_nonceVector, uint32_t *d_hash, int order);
 extern void x15_whirlpool_cpu_free(int thr_id);
@@ -57,8 +54,6 @@ extern "C" void x11hash(void *output, const void *input)
 	sph_echo512_init(&ctx_echo);
 	sph_echo512 (&ctx_echo, (const void*) hash, 64);
 	sph_echo512_close(&ctx_echo, (void*) hash);
-
-	LYRA2(hash, 32, hashB, 32, hashB, 32, 1, 8, 8);
 
 	sph_whirlpool_init(&ctx_whirlpool);
 	sph_whirlpool(&ctx_whirlpool, (const void*) hash, 64);
